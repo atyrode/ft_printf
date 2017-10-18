@@ -15,5 +15,9 @@ int					ft_isdigit(int c);
 size_t				ft_strlen(char const *str);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char                *ft_strchr(char *str, int value);
+int				    ft_strchrn(char *format, char c);
+void				ft_putchar(char c);
+void				ft_putstr(char *str);
+void				ft_putnbr(int n);
 
 #endif

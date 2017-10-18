@@ -1,40 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atyrode <atyrode@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/22 20:05:13 by atyrode           #+#    #+#             */
-/*   Updated: 2017/10/18 09:27:03 by atyrode          ###   ########.fr       */
+/*   Updated: 2017/10/18 10:14:32 by atyrode          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/ft_printf.h"
 
-char	*ft_strchr(char *str, int value)
+void		ft_putnbr(int n)
 {
-	int		i;
-	char	*p;
-
-	i = 0;
-	if (value == '\0')
+	if (n > 2147483647 || n < -2147483648)
+		return ;
+	if (n == -2147483648)
 	{
-		while (str[i] != value)
-			i++;
-		if (str[i] == value)
-		{
-			p = &str[i];
-			return (p);
-		}
-		return (NULL);
+		ft_putstr("-2147483648");
+		return ;
 	}
-	while (str[i] != value && value != '\0')
+	if (n < 0)
 	{
-		if (str[i] == '\0')
-			return (NULL);
-		i++;
+		ft_putchar('-');
+		n = -n;
 	}
-	p = &str[i];
-	return (p);
+	if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
+	}
+	else
+	{
+		ft_putchar(n + '0');
+	}
 }

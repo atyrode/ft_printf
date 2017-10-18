@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atyrode <atyrode@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/22 20:05:13 by atyrode           #+#    #+#             */
-/*   Updated: 2017/10/18 09:27:03 by atyrode          ###   ########.fr       */
+/*   Updated: 2017/10/18 10:14:29 by atyrode          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/ft_printf.h"
 
-char	*ft_strchr(char *str, int value)
+void	ft_putstr(char *str)
 {
-	int		i;
-	char	*p;
+	int i;
 
 	i = 0;
-	if (value == '\0')
+	if (str)
 	{
-		while (str[i] != value)
-			i++;
-		if (str[i] == value)
+		while (str[i] != '\0')
 		{
-			p = &str[i];
-			return (p);
+			ft_putchar(str[i]);
+			i++;
 		}
-		return (NULL);
 	}
-	while (str[i] != value && value != '\0')
-	{
-		if (str[i] == '\0')
-			return (NULL);
-		i++;
-	}
-	p = &str[i];
-	return (p);
 }
