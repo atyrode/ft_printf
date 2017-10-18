@@ -10,6 +10,14 @@
 
 # define MAX_ARGS 500
 
+typedef struct      s_val
+{
+    char            *argtype;
+    int             v_int;
+    char            v_char;
+
+}                   t_val;
+
 int					ft_atoi(char *str);
 int					ft_isdigit(int c);
 size_t				ft_strlen(char const *str);

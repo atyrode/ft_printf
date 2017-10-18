@@ -1,22 +1,34 @@
 #include "./../includes/ft_printf.h"
 
+void		printf_type(va_list list_pointer, t_val *val, int j)
+{
+	if (val->argtype[j] == 'd')
+	{
+		val->v_int = va_arg(list_pointer, int );
+		ft_putnbr(val->v_int);
+	}
+	if (val->argtype[j] == 'c')
+	{
+		val->v_char = va_arg(list_pointer, int );
+		ft_putchar(val->v_char);
+	}
+}
+
 void		ft_printf(char *format, ...)
 {
 	va_list	list_pointer;
 	int		i;
 	int		j;
 	int		numargs;
-	char	*argtype;
 	char	*tmp;
-	int		arg1;
-	char	arg2;
+	t_val	val;
 
 	i = -1;
 	tmp = format;
 	numargs = ft_strchrn(format, '%');
 	va_start(list_pointer, format);
-	if (!(argtype = malloc(sizeof(char *) * MAX_ARGS + 1)))
-		return ;
+	if (!(val.argtype = malloc(sizeof(char *) * MAX_ARGS + 1)))
+		exit(-1);
 	printf("output = \n");
 	if(numargs == 0)
 		while(format[++i])
@@ -27,26 +39,16 @@ void		ft_printf(char *format, ...)
 		while (++i < numargs)
 		{
 			tmp = ft_strchr(tmp, '%');
-			argtype[i] = *++tmp;
-			printf ("argtype[%d] = [%c]\n", i, argtype[i]);
+			val.argtype[i] = *++tmp;
+			printf (" // argtype[%d] = [%c]\n", i, val.argtype[i]);
 		}
-		j = 0;
 		i = -1;
+		j = 0;
 		while (format[++i])
 		{
 			if (format[i] == '%')
 			{
-				if (argtype[j] == 'd')
-				{
-				 	arg1 = va_arg(list_pointer, int );
-					ft_putnbr(arg1);
-				}
-				if (argtype[j] == 'c')
-				{
-				 	arg2 = va_arg(list_pointer, int );
-					ft_putchar(arg2);
-				}
-				j++;
+				printf_type(list_pointer, &val, j++);
 				i += 2;
 			}
 			write(1, &format[i], 1);
@@ -54,6 +56,7 @@ void		ft_printf(char *format, ...)
 	}
 	printf("\n");
 	va_end(list_pointer);
+	free(val.argtype);
 }
 
 int			main(void)
@@ -65,7 +68,9 @@ int			main(void)
 	j = 'o';
 	ft_printf("salut\n");
 	ft_printf("cela doit imprimer 5 = [%d]\n", i);
-	ft_printf("test '5' = %d et test 'o' = %c\n", i, j);
+	ft_printf("test '5' = [%d] et test 'o' = [%c]\n", i, j);
+	ft_printf("test '5' = [%d] et test 'o' = [%c] et rebelotte 'o' = [%c]\n", i, j, j);
+	ft_printf("test '5' = [%d] et test 'o' = [%c] et rebelotte 'o' = [%c] et encore une fois '5' = [%d]\n", i, j, j, i);
 	return (0);
 }
 
