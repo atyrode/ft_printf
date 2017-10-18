@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atyrode <atyrode@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/22 20:05:13 by atyrode           #+#    #+#             */
-/*   Updated: 2017/10/18 18:55:58 by atyrode          ###   ########.fr       */
+/*   Created: 2017/09/22 20:06:11 by atyrode           #+#    #+#             */
+/*   Updated: 2017/10/18 22:06:21 by atyrode          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/ft_printf.h"
 
-int		ft_putstr(char *str)
+char	*ft_strdup(char *str)
 {
-	int i;
+	char	*dup;
+	int		len;
+	int		i;
 
+	len = ft_strlen(str);
+	dup = (char*)malloc(sizeof(char) * (len + 1));
+	if (dup == NULL)
+		return (NULL);
 	i = 0;
-	if (str)
+	dup[len] = '\0';
+	while (str[i] != '\0')
 	{
-		while (str[i] != '\0')
-		{
-			ft_putchar(str[i]);
-			i++;
-		}
+		dup[i] = str[i];
+		i++;
 	}
-	return(i);
+	return (dup);
 }

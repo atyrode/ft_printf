@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atyrode <atyrode@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/22 20:05:13 by atyrode           #+#    #+#             */
-/*   Updated: 2017/10/18 18:55:58 by atyrode          ###   ########.fr       */
+/*   Created: 2017/09/22 20:02:28 by atyrode           #+#    #+#             */
+/*   Updated: 2017/10/18 22:02:20 by atyrode          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/ft_printf.h"
 
-int		ft_putstr(char *str)
+void	*ft_memalloc(size_t size)
 {
-	int i;
+	void *ptr;
 
-	i = 0;
-	if (str)
-	{
-		while (str[i] != '\0')
-		{
-			ft_putchar(str[i]);
-			i++;
-		}
-	}
-	return(i);
+	ptr = (void*)malloc(size);
+	if (ptr == NULL)
+		return (NULL);
+	ft_memset(ptr, 0, size);
+	return (ptr);
 }

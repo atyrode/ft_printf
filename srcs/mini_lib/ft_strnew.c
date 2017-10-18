@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atyrode <atyrode@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/22 20:05:13 by atyrode           #+#    #+#             */
-/*   Updated: 2017/10/18 18:55:58 by atyrode          ###   ########.fr       */
+/*   Created: 2017/09/22 20:08:36 by atyrode           #+#    #+#             */
+/*   Updated: 2017/10/18 22:02:04 by atyrode          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/ft_printf.h"
 
-int		ft_putstr(char *str)
+char	*ft_strnew(size_t size)
 {
-	int i;
-
-	i = 0;
-	if (str)
-	{
-		while (str[i] != '\0')
-		{
-			ft_putchar(str[i]);
-			i++;
-		}
-	}
-	return(i);
+	return (ft_memalloc(size + 1));
 }
