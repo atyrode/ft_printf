@@ -1,12 +1,14 @@
 #include "./../includes/ft_printf.h"
 
-void		add_space(t_val *val, int diff)
+int			add_space(t_val *val, int diff)
 {
 	int 	k;
 
 	k = -1;
 	while(++k <= val->int_flag - diff)
-		val->buffer = ft_strjoin(val->buffer, " ");
+		val->buffer = (val->zero) ? ft_strjoin(val->buffer, "0") :
+		ft_strjoin(val->buffer, " ");
+	return(k);
 }
 
 int			printf_type(va_list list_pointer, t_val *val, int j)
@@ -64,7 +66,7 @@ int			printf_type(va_list list_pointer, t_val *val, int j)
 	else if (val->argtype[j] == 'x' || val->argtype[j] == 'X')
 	{
 		val->v_int = va_arg(list_pointer, int );
-		(val->yes == 2) ? add_space(val, 0) : 0;
+		(val->yes == 2) ? add_space(val, ft_strlen(ft_itoa_base(val->v_int, 16))) : 0;
 		val->buffer = (val->argtype[j] == 'x') ?
 		ft_strjoin(val->buffer, ft_strlwr(ft_itoa_base(val->v_int, 16))) :
 		ft_strjoin(val->buffer, ft_itoa_base(val->v_int, 16));
@@ -73,7 +75,7 @@ int			printf_type(va_list list_pointer, t_val *val, int j)
 	else if (val->argtype[j] == 'o')
 	{
 		val->v_int = va_arg(list_pointer, int );
-		(val->yes == 2) ? add_space(val, 0) : 0;
+		(val->yes == 2) ? add_space(val, ft_strlen(ft_itoa_base(val->v_int, 8))) : 0;
 		val->buffer = ft_strjoin(val->buffer, ft_itoa_base(val->v_int, 8));
 		(val->yes == 1) ? add_space(val, ft_strlen(ft_itoa_base(val->v_int, 8))) : 0;
 	}
@@ -128,6 +130,11 @@ int		parsing(char *format, t_val *val, va_list list_pointer)
 	int		j;
 	int		tmp;
 
+/*	ft_printf("%-5.10o", 2500);
+1. (    5) -->4704 <--
+2. (   10) -->0000004704<--   */
+
+// ^@ problematic
 	i = -1;
 	j = 0;
 	val->buffer = ft_strnew(1);
@@ -139,6 +146,7 @@ int		parsing(char *format, t_val *val, va_list list_pointer)
 		{
 			val->flag = 0;
 			val->yes = 0;
+			val->zero = 0;
 			(format[i + 1] != '\0') ? i++ : 0;
 			//printf("format[%d] = %c\n", i, format[i]);
 			parsing_flags(format, val, i);
@@ -158,6 +166,12 @@ int		parsing(char *format, t_val *val, va_list list_pointer)
 			{
 				(format[i + 1] != '\0') ? i++ : 0;
 				val->buffer = ft_strjoin(val->buffer, "+");
+				//fails test "%+d", -42
+			}
+			if(val->flag & ZERO)
+			{
+				val->zero = 1;
+				(format[i + 1] != '\0') ? i++ : 0;
 			}
 			if (ft_search(format[i], "-0123456789"))
 			{
@@ -172,6 +186,7 @@ int		parsing(char *format, t_val *val, va_list list_pointer)
 				{
 					val->yes = 2;
 				}
+				//resetting flag here is kind of annoying in certain case, see val->flag zero above
 				val->flag = 0;
 				parsing_flags(format, val, i);
 				//printf("3 format[%d] = %c\n", i, format[i]);
@@ -219,7 +234,7 @@ int			ft_printf(char *format, ...)
 #ifdef MAIN
 
 # define TEST2 "%dsa%5%deed%2% tt %c %10s", 5, 'd', "salut"
-# define TEST "%o", 40
+# define TEST "%010x", 542
 
 int				main(void)
 {

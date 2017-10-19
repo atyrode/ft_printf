@@ -43,6 +43,7 @@ typedef struct      s_val
     int             int_flag;
     int             precision_flag;
     int             flag;
+	int				zero;
 
     char            *argtype;
 
