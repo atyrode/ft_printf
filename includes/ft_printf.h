@@ -22,7 +22,7 @@
 # define T_D (1 << 8)
 # define T_P (1 << 7)
 # define T_U_S (1 << 6)
-# define T_S (1 << 5)
+# define PRECISION (1 << 5)
 # define SPACE (1 << 4)
 # define HASHTAG (1 << 3)
 # define ZERO (1 << 2)
@@ -41,6 +41,7 @@ typedef struct      s_val
 
     char            *char_flag;
     int             int_flag;
+    int             precision_flag;
     int             flag;
 
     char            *argtype;
@@ -65,10 +66,10 @@ int				    ft_strchrn(char *format, char c);
 void				ft_putchar(char c);
 int 				ft_putstr(char *str);
 void				ft_putnbr(int n);
-char			    *ft_itoa_base(uintmax_t nbr, int base, int low_up);
+char            	*ft_itoa_base(int value, int base);
 int                 ft_search(char c, char *charset);
 char                ft_search_val(char c, char *charset);
-int	                ft_tolower(int c);
+char			    *ft_strlwr(char *s1);
 void	            *ft_memalloc(size_t size);
 void	            *ft_memset(void *ptr, int value, size_t num);
 char	            *ft_strnew(size_t size);

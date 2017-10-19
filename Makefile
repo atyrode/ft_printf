@@ -6,7 +6,7 @@
 #    By: atyrode <atyrode@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/30 18:19:00 by atyrode           #+#    #+#              #
-#    Updated: 2017/10/19 00:06:55 by atyrode          ###   ########.fr        #
+#    Updated: 2017/10/19 18:20:43 by atyrode          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libftprintf
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror
+#FLAGS = -Wall -Wextra -Werror
 
 SRC = srcs/ft_printf.c
 
@@ -35,7 +35,8 @@ MINI_LIB = 	srcs/mini_lib/ft_atoi.c \
 			srcs/mini_lib/ft_memalloc.c \
 			srcs/mini_lib/ft_itoa.c \
 			srcs/mini_lib/ft_strdup.c \
-			srcs/mini_lib/ft_strjoin.c
+			srcs/mini_lib/ft_strjoin.c \
+			srcs/mini_lib/ft_strlwr.c
 
 O_FILES = $(SRC:.c=.o)
 O_FILES_LIB = $(MINI_LIB:.c=.o)
