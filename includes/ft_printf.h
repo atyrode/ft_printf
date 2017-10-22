@@ -17,11 +17,11 @@
 # define T_U (1 << 13)
 # define T_U_O (1 << 12)
 # define T_O (1 << 11)
-# define T_I (1 << 10)
-# define T_U_D (1 << 9)
-# define T_D (1 << 8)
-# define T_P (1 << 7)
-# define T_U_S (1 << 6)
+# define INTMAX_T (1 << 10)
+# define UNSIGNED_CHAR (1 << 9)
+# define SHORT (1 << 8)
+# define LONG_LONG (1 << 7)
+# define LONG (1 << 6)
 # define PRECISION (1 << 5)
 # define SPACE (1 << 4)
 # define HASHTAG (1 << 3)
@@ -47,7 +47,7 @@ typedef struct      s_val
 
     char            *argtype;
 
-    int             v_int;
+    intmax_t        v_int;
     char            v_char;
     char            *v_str;
     void            *v_ptr;
@@ -67,7 +67,7 @@ int				    ft_strchrn(char *format, char c);
 void				ft_putchar(char c);
 int 				ft_putstr(char *str);
 void				ft_putnbr(int n);
-char            	*ft_itoa_base(int value, int base);
+char            	*ft_itoa_base(intmax_t value, int base);
 int                 ft_search(char c, char *charset);
 char                ft_search_val(char c, char *charset);
 char			    *ft_strlwr(char *s1);

@@ -6,13 +6,13 @@
 /*   By: atyrode <atyrode@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/22 20:05:13 by atyrode           #+#    #+#             */
-/*   Updated: 2017/10/19 15:44:05 by atyrode          ###   ########.fr       */
+/*   Updated: 2017/10/22 03:57:10 by atyrode          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/ft_printf.h"
 
-char	*ft_itoa_base(int value, int base)
+char	*ft_itoa_base(intmax_t value, int base)
 {
 	unsigned int	i;
 	int				size;

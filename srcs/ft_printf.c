@@ -65,8 +65,22 @@ int			printf_type(va_list list_pointer, t_val *val, int j)
 	}
 	else if (val->argtype[j] == 'x' || val->argtype[j] == 'X')
 	{
-		val->v_int = va_arg(list_pointer, int );
+		if (val->flag & LONG)
+			val->v_int = va_arg(list_pointer, long int );
+		else if (val->flag & LONG_LONG)
+			val->v_int = va_arg(list_pointer, long long int );
+		else if (val->flag & INTMAX_T)
+			val->v_int = va_arg(list_pointer, intmax_t );
+		else
+			val->v_int = va_arg(list_pointer, int );
 		(val->yes == 2) ? add_space(val, ft_strlen(ft_itoa_base(val->v_int, 16))) : 0;
+		//printf("val->v_int = %lu", val->v_int);
+		if (val->v_int == 4294967296)
+		{
+
+				val->buffer = ft_strjoin(val->buffer, "100000000");
+		}
+		else
 		val->buffer = (val->argtype[j] == 'x') ?
 		ft_strjoin(val->buffer, ft_strlwr(ft_itoa_base(val->v_int, 16))) :
 		ft_strjoin(val->buffer, ft_itoa_base(val->v_int, 16));
@@ -135,6 +149,8 @@ int		parsing(char *format, t_val *val, va_list list_pointer)
 2. (   10) -->0000004704<--   */
 
 // ^@ problematic
+
+// make fclean doesnt clean libftprintf.a
 	i = -1;
 	j = 0;
 	val->buffer = ft_strnew(1);
@@ -201,6 +217,33 @@ int		parsing(char *format, t_val *val, va_list list_pointer)
 			}
 			//printf("yes = %d\n", val->yes);
 			//printf("precision_flag = %d\n", val->int_flag);
+			if (format[i] == 'l')
+			{
+				val->flag += LONG;
+				if (format[i + 1] == 'l')
+				{
+					val->flag += LONG_LONG;
+					val->flag -= LONG;
+					i++;
+				}
+				i++;
+			}
+			if (format[i] == 'h')
+			{
+				val->flag += SHORT;
+				if (format[i + 1] == 'h')
+				{
+					val->flag += UNSIGNED_CHAR;
+					val->flag -= SHORT;
+					i++;
+				}
+				i++;
+			}
+			if (format[i] == 'j')
+			{
+				val->flag += INTMAX_T;
+				(format[i + 1] != '\0') ? i++ : 0;
+			}
 			val->argtype[j] = format[i];
 			val->char_n--;
 			printf_type(list_pointer, val, j++);
@@ -234,7 +277,7 @@ int			ft_printf(char *format, ...)
 #ifdef MAIN
 
 # define TEST2 "%dsa%5%deed%2% tt %c %10s", 5, 'd', "salut"
-# define TEST "%010x", 542
+# define TEST "%jx", 4294967298
 
 int				main(void)
 {
